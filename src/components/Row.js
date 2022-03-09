@@ -15,7 +15,7 @@ const Row = ({ title, fetchUrl, isLargeRow }) => {
   useEffect(() => {
     async function fetchData() {
       const response = await axios.get(fetchUrl);
-      // console.table(response.data.results);
+      console.log(isLargeRow && response.data.results);
       setMovies(response.data.results);
       return response;
     }
@@ -58,7 +58,11 @@ const Row = ({ title, fetchUrl, isLargeRow }) => {
             className={`row__poster ${isLargeRow && "row__posterLarge"}`}
             key={movie.id}
             src={`${base_url}${
-              isLargeRow ? movie.poster_path : movie.backdrop_path
+              isLargeRow
+                ? movie.poster_path === null && movie.backdrop_path === null
+                  ? "https://image.tmdb.org/t/p/original/suopoADq0k8YZr4dQXcU6pToj6s.jpg"
+                  : movie.poster_path
+                : movie.backdrop_path
             }`}
             alt={movie.name}
           />

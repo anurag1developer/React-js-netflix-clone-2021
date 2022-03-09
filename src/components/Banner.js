@@ -10,7 +10,9 @@ const Banner = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get(requests.fetchNetflixOriginals);
+      const res = await axios.get(
+        requests.fetchNetflixOriginals || requests.fetchTrending
+      );
       const randomNum = Math.floor(Math.random() * res.data.results.length - 1);
       console.log(res.data.results[randomNum]);
       setMovie(res.data.results[randomNum]);
@@ -38,7 +40,9 @@ const Banner = () => {
     >
       <div className="banner__contents">
         <h1 className="banner__title">
-          {(movie && movie.title) || movie.name || movie.original_name}
+          {(movie && movie.title) ||
+            (movie && movie.name) ||
+            movie.original_name}
         </h1>
         <div className="banner__buttons">
           <button className="banner__button">Play</button>
